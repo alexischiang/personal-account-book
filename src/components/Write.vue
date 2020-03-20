@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import format from "date-format";
 export default {
   data() {
     return {
@@ -42,10 +43,19 @@ export default {
       addedBill: this.$store.state.addedBill
     };
   },
+  computed: {
+    bill() {
+      return this.$store.getters.bill;
+    }
+  },
   methods: {
     addBill() {
-      const format = require("date-format");
+      // 用户新增账单数据结构统一在这里规定
       let formatObj = {};
+      // id & idDeleted
+      formatObj.id = this.bill.length;
+      formatObj.isDeleted = false;
+      // type & amount
       if (this.input.money[0] != "-") {
         formatObj.type = 1;
         formatObj.amount = this.input.money;
@@ -53,12 +63,14 @@ export default {
         formatObj.type = 0;
         formatObj.amount = this.input.money.substr(0);
       }
+      // time & date & category
       let date = new Date();
       formatObj.time = date.getTime();
       formatObj.date = format.asString("yyyy-MM-dd", date);
       formatObj.category = this.input.cate;
-      console.log(formatObj);
+      // 执行新增方法
       this.$store.commit("addBill", formatObj);
+      // 清空输入
       this.input.money = "";
       this.input.cate = "";
     }
