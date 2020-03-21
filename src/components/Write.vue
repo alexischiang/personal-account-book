@@ -1,11 +1,17 @@
 <template>
-  <div class="write-vue-container">
+  <div class="write-view-container">
     <div class="input">
       <el-input
         v-model="input.money"
-        placeholder="请输入金额"
-        style=""
+        placeholder="请输入金额,如123或-123"
+        diff="input"
+        @input="checkInput()"
       ></el-input>
+      <div class="tip" :class="{ showTip: showTip }">
+        格式错误
+      </div>
+    </div>
+    <div class="select">
       <el-select
         v-model="input.cate"
         placeholder="请选择"
@@ -40,7 +46,8 @@ export default {
         cate: ""
       },
       initCate: this.$store.state.initCate,
-      addedBill: this.$store.state.addedBill
+      addedBill: this.$store.state.addedBill,
+      showTip: false
     };
   },
   computed: {
@@ -73,14 +80,65 @@ export default {
       // 清空输入
       this.input.money = "";
       this.input.cate = "";
+    },
+    checkInput() {
+      !/^(\d+\.?)?\d{0,2}$/.test(this.input.money)
+        ? (this.showTip = true)
+        : (this.showTip = false);
     }
   }
 };
 </script>
 
-<style>
-.input {
+<style lang="scss">
+.write-view-container {
   display: flex;
-  justify-content: space-between;
+}
+.el-input {
+  input[diff="input"] {
+    width: 600px;
+    height: 80px;
+    font-size: 40px;
+    font-weight: 700;
+    background: transparent;
+    border: 1px rgba($color: #ffff, $alpha: 0.5) solid;
+    color: white;
+
+    &::placeholder {
+      color: rgba($color: #fff, $alpha: 0.3);
+      font-weight: 100;
+    }
+
+    &:hover {
+      border: 1px rgba($color: #ffff, $alpha: 1) solid;
+      transition: border 0.3s;
+    }
+
+    &:focus {
+      border: 1px rgba($color: #ffff, $alpha: 1) solid;
+    }
+  }
+}
+
+.input {
+  position: relative;
+  .tip {
+    font: 400 11px system-ui;
+    width: 600px;
+    height: 80px;
+    font-size: 40px;
+    font-weight: 100;
+    line-height: 80px;
+    text-align: right;
+    color: rgba($color: #fff, $alpha: 0.3);
+    top: 0;
+    right: 17px;
+    display: none;
+    position: absolute;
+  }
+  .tip.showTip {
+    display: block;
+    pointer-events: none;
+  }
 }
 </style>

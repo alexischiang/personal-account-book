@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table
+      class="bill-table"
       ref="filterTable"
       :data="unDeletedBill"
       style="width: 100%;"
@@ -86,7 +87,7 @@ export default {
     filterTag(value, row) {
       return row.category.id === value;
     },
-    filterHandler(value, row, column) {
+    filterHandler(value, row) {
       let date = row["date"];
       let a = date.split("-");
       let num = Number(a[0] + a[1]);
@@ -100,7 +101,7 @@ export default {
       this.$store.commit("deleteRow", row);
     },
     getSummaries(param) {
-      const { columns, data } = param;
+      const { data } = param;
       const showArr = [];
       showArr[3] = "";
       let total = 0;
@@ -109,7 +110,9 @@ export default {
       data.forEach(item => {
         let money = Number(item.amount);
         total += money;
-        money >= 0 ? (income += money) : (outcome += money);
+        money >= 0
+          ? (income = parseFloat((income + money).toFixed(10)))
+          : (outcome = parseFloat((outcome + money).toFixed(10)));
       });
       showArr[0] = `合计:${total}元`;
       showArr[1] = `收入:${income}元`;
@@ -119,3 +122,13 @@ export default {
   }
 };
 </script>
+
+<style>
+.el-table__footer-wrapper {
+  position: sticky;
+  bottom: 0;
+}
+.bill-table {
+  overflow: visible !important;
+}
+</style>
