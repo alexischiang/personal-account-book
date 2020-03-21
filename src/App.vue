@@ -39,9 +39,9 @@ body {
     #8e44ad
   );
   background-size: 400%;
-  /* animation: bganimation 40s infinite; */
+  animation: bganimation 40s infinite;
 }
-/* 
+
 @keyframes bganimation {
   0% {
     background-position: 0% 50%;
@@ -52,7 +52,7 @@ body {
   1000% {
     background-position: 0% 50%;
   }
-} */
+}
 .container {
   padding-top: 100px;
   margin: 0 auto;

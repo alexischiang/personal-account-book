@@ -9,5 +9,8 @@ export default {
         item.isDeleted = true;
       }
     });
+  },
+  addCate(state, obj) {
+    state.initCate.unshift(obj);
   }
 };
