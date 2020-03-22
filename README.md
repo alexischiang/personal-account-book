@@ -2,8 +2,6 @@
 
 **本项目使用 Vue2.0+vuex+element.ui 进行搭建，实现简易的记账簿功能，并拥有简约的 ui 体验。**
 
-![示例图](public/example.png)
-
 ## 🔧 如何使用
 
 ```
