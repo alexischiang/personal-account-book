@@ -131,7 +131,20 @@ export default {
       obj.id = randomString();
       obj.name = this.newCate;
       obj.type = 0;
-      this.$store.commit("addCate", obj);
+      if (!this.newCate) {
+        this.$toasted.show("请输入新增类名", {
+          theme: "outline",
+          position: "top-right",
+          duration: 2000
+        });
+      } else {
+        this.$toasted.show("新增类别成功", {
+          theme: "outline",
+          position: "top-right",
+          duration: 2000
+        });
+        this.$store.commit("addCate", obj);
+      }
       this.newCate = "";
     }
   }
@@ -205,7 +218,7 @@ export default {
         border: 1px rgba($color: #ffff, $alpha: 0.5) solid;
         color: white;
         background: transparent;
-        width: 200px;
+        width: 100%;
         height: 40px;
         font-size: 20px;
         font-weight: 400;
@@ -239,7 +252,7 @@ export default {
       border: 1px rgba($color: #ffff, $alpha: 0.5) solid;
       color: white;
       background: transparent;
-      width: 200px;
+      width: 100%px;
       height: 40px;
       font-size: 20px;
       font-weight: 400;
