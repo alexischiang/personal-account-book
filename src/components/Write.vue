@@ -86,6 +86,11 @@ export default {
           formatObj.category = this.input.cate;
           // 执行新增方法
           this.$store.commit("addBill", formatObj);
+          this.$toasted.show("新增账目成功!", {
+            theme: "outline",
+            position: "top-right",
+            duration: 2000
+          });
           // 清空输入
           this.input.money = "";
           this.input.cate = "";
