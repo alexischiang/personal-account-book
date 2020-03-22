@@ -18,7 +18,7 @@
         :filter-method="filterHandler"
       >
       </el-table-column>
-      <el-table-column prop="amount" label="金额">
+      <el-table-column prop="amount" label="金额" sortable>
         <template slot-scope="scope">
           <el-tag
             :type="scope.row.amount >= 0 ? 'primary' : 'danger'"
@@ -130,5 +130,6 @@ export default {
 }
 .bill-table {
   overflow: visible !important;
+  box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
 }
 </style>

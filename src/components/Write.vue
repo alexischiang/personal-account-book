@@ -64,33 +64,51 @@ export default {
   },
   methods: {
     addBill() {
-      // 用户新增账单数据结构统一在这里规定
-      let formatObj = {};
-      // id & idDeleted
-      formatObj.id = this.bill.length;
-      formatObj.isDeleted = false;
-      // type & amount
-      if (this.input.money[0] != "-") {
-        formatObj.type = 1;
-        formatObj.amount = this.input.money;
+      if (!this.showTip) {
+        if (this.input.money && this.input.cate) {
+          // 用户新增账单数据结构统一在这里规定
+          let formatObj = {};
+          // id & idDeleted
+          formatObj.id = this.bill.length;
+          formatObj.isDeleted = false;
+          // type & amount
+          if (this.input.money[0] != "-") {
+            formatObj.type = 1;
+            formatObj.amount = this.input.money;
+          } else {
+            formatObj.type = 0;
+            formatObj.amount = this.input.money.substr(0);
+          }
+          // time & date & category
+          let date = new Date();
+          formatObj.time = date.getTime();
+          formatObj.date = format.asString("yyyy-MM-dd", date);
+          formatObj.category = this.input.cate;
+          // 执行新增方法
+          this.$store.commit("addBill", formatObj);
+          // 清空输入
+          this.input.money = "";
+          this.input.cate = "";
+        } else {
+          this.$toasted.show("请输入完整账单数据", {
+            theme: "outline",
+            position: "top-right",
+            duration: 2000
+          });
+        }
       } else {
-        formatObj.type = 0;
-        formatObj.amount = this.input.money.substr(0);
+        this.$toasted.show("金额格式错误", {
+          theme: "outline",
+          position: "top-right",
+          duration: 2000
+        });
+        this.input.money = "";
+        this.showTip = false;
       }
-      // time & date & category
-      let date = new Date();
-      formatObj.time = date.getTime();
-      formatObj.date = format.asString("yyyy-MM-dd", date);
-      formatObj.category = this.input.cate;
-      // 执行新增方法
-      this.$store.commit("addBill", formatObj);
-      // 清空输入
-      this.input.money = "";
-      this.input.cate = "";
     },
     checkInput() {
       // 检查输入格式是否符合最高精度两位小数的数字
-      !/^(\d+\.?)?\d{0,2}$/.test(this.input.money)
+      !/^(-)?(\d+\.?)?\d{0,2}$/.test(this.input.money)
         ? (this.showTip = true)
         : (this.showTip = false);
     },
@@ -151,10 +169,10 @@ export default {
   .tip {
     font: 400 11px system-ui;
     width: 600px;
-    height: 80px;
+    height: 90px;
     font-size: 40px;
     font-weight: 100;
-    line-height: 80px;
+    line-height: 90px;
     text-align: right;
     color: rgba($color: #fff, $alpha: 0.5);
     top: 0;
