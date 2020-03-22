@@ -3,7 +3,7 @@ const request = require("request");
 const csv = require("csvtojson");
 
 function initCsv(filename) {
-  let url = "http://localhost:8080/" + filename + ".csv";
+  let url = `http://localhost:${location.port}/` + filename + ".csv";
   let initData = [];
   return new Promise(resolve => {
     csv()
