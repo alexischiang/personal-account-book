@@ -99,6 +99,11 @@ export default {
     },
     handleDelete(row) {
       this.$store.commit("deleteRow", row);
+      this.$toasted.show("删除账目成功!", {
+        theme: "outline",
+        position: "top-right",
+        duration: 2000
+      });
     },
     getSummaries(param) {
       const { data } = param;
