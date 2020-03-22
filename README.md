@@ -1,24 +1,18 @@
-# acbook
+## 📚 项目简介
 
-## Project setup
+本项目使用 Vue2.0+vuex+element.ui 进行搭建，实现简易的记账簿功能，并拥有令人舒心的 ui。
+
+## 🔧 如何使用
+
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
+cd acbook
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 🔥 功能介绍
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. 加载 csv 数据
+2. 以列表的形式展现账单内容 **（支持月份、分类二次筛选）**
+3. 支持用户添加账单 精度为小数点后两位 **（支出请添加'-'如'-200'）**
+4. 底部动态统计展示当前列表的 **合计、收入、支出金额**
